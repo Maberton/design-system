@@ -20,6 +20,9 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface TokenSms {
+        "name": string;
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -28,8 +31,15 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLTokenSmsElement extends Components.TokenSms, HTMLStencilElement {
+    }
+    var HTMLTokenSmsElement: {
+        prototype: HTMLTokenSmsElement;
+        new (): HTMLTokenSmsElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "token-sms": HTMLTokenSmsElement;
     }
 }
 declare namespace LocalJSX {
@@ -47,8 +57,13 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface TokenSms {
+        "name"?: string;
+        "onEnviaTokenSaida"?: (event: CustomEvent<{digitado: boolean, token: string}>) => void;
+    }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "token-sms": TokenSms;
     }
 }
 export { LocalJSX as JSX };
@@ -56,6 +71,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "token-sms": LocalJSX.TokenSms & JSXBase.HTMLAttributes<HTMLTokenSmsElement>;
         }
     }
 }
