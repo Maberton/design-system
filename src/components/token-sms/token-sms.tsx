@@ -7,55 +7,55 @@ import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 })
 export class TokenSms {
 
-  @Prop() quantidadeDigitos = 6;
+  @Prop() tamanho: number;
 
-  @State() digitado: boolean;
+  @State() quantidadeDigitos: number;
+
   @State() digitos = new Array<string>();
   @State() tokenString: string;
   @Event() enviaTokenSaida: EventEmitter<{digitado: boolean, token: string}>;
 
-  submitValoresForm(evento) {
-    // this.enviaTokenSaida.emit({digitado: this.digitado, token: ''})
-    evento.preventDefault();
-    return;
-  }
-
-  somenteNumero(evento): boolean {
-    const ASCIICode = (evento.which) ? evento.which : evento.keyCode
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)){
-      return false;
-    } 
-
-    return true;
+  componentWillLoad() {
+    this.digitos = new Array<string>();
+    this.quantidadeDigitos = this.tamanho ? this.tamanho : 6;
   }
 
   gravaDigito(evento, indice: number) {
     const valor = evento.target.value;
     this.digitos[indice] = valor;
     const saida = {
-      digitado: this.tokenDigitado(),
+      digitado: this.validaTokenDigitado(),
       token: this.tokenString
     }
     console.log('saida', saida);
     this.enviaTokenSaida.emit(saida);
   }
 
-  tokenDigitado(): boolean {
+  validaTokenDigitado(): boolean {
     this.tokenString = this.digitos.join('');
-    return this.tokenString.length === 6;
+    return this.tokenString.length === this.quantidadeDigitos;
+  }
+
+  montarCamposToken() {
+    let conteudo = [];
+    for (let i = 0; i < this.quantidadeDigitos; i++) {
+      conteudo.push(<input type="text" value={this.digitos[i]} maxlength="1" onInput={(event) => this.gravaDigito(event, i)}/>)
+    }
+    return conteudo;
   }
 
   @Prop() name: string;
 
   render() {
     return (
-      <form onSubmit={(e) => this.submitValoresForm(e)}>
-        <input type="text" value={this.digitos[0]} maxlength="1" onInput={(event) => this.gravaDigito(event, 0)}/>
+      <form>
+        {this.montarCamposToken()}
+        {/* <input type="text" value={this.digitos[0]} maxlength="1" onInput={(event) => this.gravaDigito(event, 0)}/>
         <input type="text" value={this.digitos[1]} maxlength="1" onInput={(event) => this.gravaDigito(event, 1)}/>
         <input type="text" value={this.digitos[2]} maxlength="1" onInput={(event) => this.gravaDigito(event, 2)}/>
         <input type="text" value={this.digitos[3]} maxlength="1" onInput={(event) => this.gravaDigito(event, 3)}/>
         <input type="text" value={this.digitos[4]} maxlength="1" onInput={(event) => this.gravaDigito(event, 4)}/>
-        <input type="text" value={this.digitos[5]} maxlength="1" onInput={(event) => this.gravaDigito(event, 5)}/>
+        <input type="text" value={this.digitos[5]} maxlength="1" onInput={(event) => this.gravaDigito(event, 5)}/> */}
       </form>
       // <Host>
       //   <slot></slot>
