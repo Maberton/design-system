@@ -22,6 +22,7 @@ export namespace Components {
     }
     interface TokenSms {
         "name": string;
+        "tamanho": number;
     }
 }
 declare global {
@@ -60,6 +61,7 @@ declare namespace LocalJSX {
     interface TokenSms {
         "name"?: string;
         "onEnviaTokenSaida"?: (event: CustomEvent<{digitado: boolean, token: string}>) => void;
+        "tamanho"?: number;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
