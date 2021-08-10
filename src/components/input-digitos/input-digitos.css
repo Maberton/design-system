@@ -10,4 +10,7 @@ input {
   border-radius: 8px;
   margin-right: 10px;
   outline: none;
+  border: none;
+  background-color: #f6f6f6;
+  text-align: center;
 }
