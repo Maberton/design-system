@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { TokenSms } from '../token-sms';
+import { InputDigitos } from '../input-digitos';
 
-describe('token-sms', () => {
+describe('input-digitos', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [TokenSms],
-      html: `<token-sms></token-sms>`,
+      components: [InputDigitos],
+      html: `<input-digitos></input-digitos>`,
     });
     expect(page.root).toEqualHtml(`
-      <token-sms>
+      <input-digitos>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </token-sms>
+      </input-digitos>
     `);
   });
 });

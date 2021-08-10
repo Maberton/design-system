@@ -6,6 +6,13 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface InputDigitos {
+        "alfanumerico": boolean;
+        "desabilitaInputs": boolean;
+        "digitosExternos": Array<string>;
+        "tamanho": number;
+        "tipoInput": string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -20,30 +27,34 @@ export namespace Components {
          */
         "middle": string;
     }
-    interface TokenSms {
-        "name": string;
-        "tamanho": number;
-    }
 }
 declare global {
+    interface HTMLInputDigitosElement extends Components.InputDigitos, HTMLStencilElement {
+    }
+    var HTMLInputDigitosElement: {
+        prototype: HTMLInputDigitosElement;
+        new (): HTMLInputDigitosElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
-    interface HTMLTokenSmsElement extends Components.TokenSms, HTMLStencilElement {
-    }
-    var HTMLTokenSmsElement: {
-        prototype: HTMLTokenSmsElement;
-        new (): HTMLTokenSmsElement;
-    };
     interface HTMLElementTagNameMap {
+        "input-digitos": HTMLInputDigitosElement;
         "my-component": HTMLMyComponentElement;
-        "token-sms": HTMLTokenSmsElement;
     }
 }
 declare namespace LocalJSX {
+    interface InputDigitos {
+        "alfanumerico"?: boolean;
+        "desabilitaInputs"?: boolean;
+        "digitosExternos"?: Array<string>;
+        "onEnviaStringSaida"?: (event: CustomEvent<{digitado: boolean, string: string}>) => void;
+        "tamanho"?: number;
+        "tipoInput"?: string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -58,22 +69,17 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
-    interface TokenSms {
-        "name"?: string;
-        "onEnviaTokenSaida"?: (event: CustomEvent<{digitado: boolean, token: string}>) => void;
-        "tamanho"?: number;
-    }
     interface IntrinsicElements {
+        "input-digitos": InputDigitos;
         "my-component": MyComponent;
-        "token-sms": TokenSms;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "input-digitos": LocalJSX.InputDigitos & JSXBase.HTMLAttributes<HTMLInputDigitosElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
-            "token-sms": LocalJSX.TokenSms & JSXBase.HTMLAttributes<HTMLTokenSmsElement>;
         }
     }
 }
